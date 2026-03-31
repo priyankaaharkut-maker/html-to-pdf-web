@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India: Crude Oil Shock — Comprehensive Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#fff;color:#1a1a1a;font-size:13px;line-height:1.6}
+  .page{width:210mm;min-height:297mm;margin:0 auto;padding:14mm 14mm 10mm;background:#fff;position:relative}
+  .cover{background:linear-gradient(135deg,#0f2d4e 0%,#1a4a7a 50%,#c85a00 100%);color:#fff;padding:40px 36px 36px;border-radius:8px;margin-bottom:20px;position:relative;overflow:hidden}
+  .cover::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(255,255,255,0.04);border-radius:50%}
+  .cover-logo{font-size:11px;font-weight:600;letter-spacing:0.15em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:16px}
+  .cover-logo span{color:#f97316;font-size:18px;font-weight:700;display:block;margin-top:2px}
+  .cover-title{font-size:26px;font-weight:700;line-height:1.2;margin-bottom:8px}
+  .cover-title em{color:#fb923c;font-style:normal}
+  .cover-sub{font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:20px;line-height:1.7}
+  .cover-meta{display:flex;gap:10px;flex-wrap:wrap}
+  .cover-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:500}
+  .cover-pill.alert{background:rgba(220,38,38,0.25);border-color:rgba(220,38,38,0.4);color:#fca5a5}
+  .sec-head{display:flex;align-items:center;gap:10px;margin:18px 0 10px}
+  .sec-num{width:26px;height:26px;border-radius:50%;background:#0f2d4e;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sec-title{font-size:15px;font-weight:700;color:#0f2d4e}
+  .sec-line{flex:1;height:1px;background:linear-gradient(90deg,#0f2d4e,transparent)}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+  .metric{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;border-left:3px solid #0f2d4e}
+  .metric.alert{border-left-color:#dc2626}
+  .metric.warn{border-left-color:#f97316}
+  .metric.good{border-left-color:#16a34a}
+  .m-label{font-size:10px;color:#64748b;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+  .m-val{font-size:20px;font-weight:700;color:#0f2d4e;line-height:1.1;margin:2px 0}
+  .m-change{font-size:10px;font-weight:500}
+  .red{color:#dc2626}.green{color:#16a34a}.amber{color:#d97706}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:12px;break-inside:avoid}
+  .card-title{font-size:13px;font-weight:700;color:#0f2d4e;margin-bottom:3px}
+  .card-sub{font-size:10px;color:#64748b;margin-bottom:10px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+  .chart-wrap{position:relative;width:100%}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th{background:#0f2d4e;color:#fff;padding:6px 8px;text-align:left;font-weight:600;font-size:10px}
+  td{padding:5px 8px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+  tr:nth-child(even) td{background:#f8fafc}
+  tr.today td{background:#fef3c7;font-weight:600;color:#92400e}
+  tr.danger td{background:#fef2f2}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:600;white-space:nowrap}
+  .bg{background:#dcfce7;color:#166534}.bb{background:#dbeafe;color:#1e40af}
+  .ba{background:#fef3c7;color:#92400e}.br{background:#fee2e2;color:#991b1b}.bd{background:#fecaca;color:#7f1d1d}
+  .sector-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #f1f5f9}
+  .s-name{font-size:10px;min-width:130px;color:#1e293b;font-weight:500}
+  .s-bar-wrap{flex:1;background:#f1f5f9;border-radius:3px;height:12px;overflow:visible;position:relative}
+  .s-bar{height:100%;border-radius:3px;position:relative;display:flex;align-items:center;justify-content:flex-end;padding-right:4px}
+  .s-bar-label{font-size:8px;color:#fff;font-weight:700;white-space:nowrap;position:absolute;right:4px}
+  .s-val{font-size:10px;min-width:80px;text-align:right;color:#475569;font-weight:600}
+  .htable{width:100%;border-collapse:collapse;font-size:10px}
+  .htable th{background:#1e3a5f;color:#fff;padding:5px 8px;font-size:9px;font-weight:600}
+  .htable td{padding:5px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+  .htable tr:nth-child(even) td{background:#f8fafc}
+  .rupee-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .rupee-card{border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;background:#fafafa}
+  .rupee-card.today-r{border-color:#d97706;background:#fffbeb}
+  .rupee-card.danger-r{border-color:#dc2626;background:#fff5f5}
+  .r-rate{font-size:14px;font-weight:700;color:#0f2d4e}
+  .r-extra{font-size:10px;color:#64748b;margin-top:2px}
+  .r-bar-wrap{background:#e2e8f0;border-radius:3px;height:5px;margin-top:6px;position:relative}
+  .r-bar{height:100%;border-radius:3px}
+  .comp-table{width:100%;border-collapse:collapse;font-size:10px}
+  .comp-table th{background:#1e3a5f;color:#fff;padding:5px 8px;font-size:9px;font-weight:600;text-align:center}
+  .comp-table td{padding:5px 8px;border:1px solid #e2e8f0;text-align:center;vertical-align:top}
+  .comp-table td:first-child{text-align:left;font-weight:600;background:#f8fafc}
+  .callout{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 6px 6px 0;padding:8px 12px;margin:8px 0;font-size:11px;color:#78350f}
+  .callout.danger{background:#fef2f2;border-left-color:#dc2626;color:#7f1d1d}
+  .callout.info{background:#eff6ff;border-left-color:#3b82f6;color:#1e3a8a}
+  .footer-bar{background:#0f2d4e;color:rgba(255,255,255,0.65);font-size:9px;padding:8px 14px;border-radius:6px;margin-top:16px;line-height:1.6}
+  .divider{height:1px;background:#e2e8f0;margin:12px 0}
+  .tag{display:inline-block;background:#e0f2fe;color:#075985;font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;margin-right:4px}
+  .tag.r{background:#fee2e2;color:#991b1b}.tag.g{background:#dcfce7;color:#166534}.tag.a{background:#fef3c7;color:#92400e}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:10px;color:#475569}
+  .legend span{display:flex;align-items:center;gap:4px}
+  .ldot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+  /* Pie data table */
+  .pie-data{width:100%;font-size:9px;border-collapse:collapse;margin-top:6px}
+  .pie-data td{padding:2px 4px;border-bottom:1px solid #f1f5f9}
+  .pie-dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:3px;vertical-align:middle}
+  @media print{
+    body{background:#fff}
+    .page{width:210mm;padding:12mm 12mm 10mm;margin:0}
+    .no-print{display:none}
+    .page-break{page-break-before:always}
+    canvas{max-width:100%}
+    .card{break-inside:avoid}
+  }
+  .print-btn{position:fixed;bottom:24px;right:24px;background:#0f2d4e;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+  .print-btn:hover{background:#1a4a7a}
+</style>
+</head>
+<body>
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-logo">Esprit Growth Partners <span>RESEARCH REPORT</span></div>
+  <div class="cover-title">India: Crude Oil Shock &amp;<br><em>Macro-Financial Impact</em></div>
+  <div class="cover-sub">Israel–Iran War · Hormuz Chokepoint · CPI, GDP, INR &amp; Sector Analysis<br>Base: Brent $112.57/bbl · INR ₹94.71/USD · CPI ~5.43% (est.) · <strong>March 28, 2026</strong></div>
+  <div class="cover-meta">
+    <span class="cover-pill alert">CPI Risk: 5.4–8.6%</span>
+    <span class="cover-pill alert">+315 bps combined shock</span>
+    <span class="cover-pill">GDP: 4.3–6.7%</span>
+    <span class="cover-pill">RBI upper band: 6%</span>
+    <span class="cover-pill">46% crude via Hormuz</span>
+  </div>
+</div>
+
+<!-- S1: SNAPSHOT -->
+<div class="sec-head"><div class="sec-num">1</div><div class="sec-title">Current Macro Snapshot</div><div class="sec-line"></div></div>
+<div class="metrics">
+  <div class="metric alert"><div class="m-label">Brent Crude</div><div class="m-val">$112.57</div><div class="m-change red">↑ +$45.57 from Jan '26</div></div>
+  <div class="metric alert"><div class="m-label">USD / INR</div><div class="m-val">₹94.71</div><div class="m-change red">↑ 8.3% depreciation</div></div>
+  <div class="metric warn"><div class="m-label">CPI Inflation</div><div class="m-val">5.43%</div><div class="m-change red">↑ +315 bps shock</div></div>
+  <div class="metric warn"><div class="m-label">GDP Forecast</div><div class="m-val">5.9%</div><div class="m-change amber">↓ from 7.0% pre-war</div></div>
+</div>
+<div class="metrics">
+  <div class="metric alert"><div class="m-label">CAD (% GDP)</div><div class="m-val">-2.5%</div><div class="m-change red">vs -1.3% pre-war</div></div>
+  <div class="metric alert"><div class="m-label">OMC Loss/Day</div><div class="m-val">₹2,400cr</div><div class="m-change red">Under-recovery crisis</div></div>
+  <div class="metric warn"><div class="m-label">Fiscal Deficit</div><div class="m-val">5.4%</div><div class="m-change red">vs 4.5% pre-war</div></div>
+  <div class="metric warn"><div class="m-label">FPI Outflows</div><div class="m-val">₹1.07L cr</div><div class="m-change red">March 2026</div></div>
+</div>
+<div class="callout danger">
+  <strong>Headline:</strong> Every $10/bbl rise adds ~55–60 bps to India's CPI. At $112.57 — a $45.57 rise from Jan's $67 base — crude alone adds ~250 bps. Combined with rupee sliding from ₹86.8 to ₹94.71 (adding ~66 bps), India's total inflation shock is <strong>~315 bps</strong>, pushing CPI toward 5.4–5.9%. RBI's upper tolerance band is 6%.
+</div>
+
+<!-- S2: HORMUZ -->
+<div class="sec-head"><div class="sec-num">2</div><div class="sec-title">India's Hormuz Dependency — Structural Vulnerability</div><div class="sec-line"></div></div>
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">Global Hormuz Flow Share (2025)</div>
+    <div class="card-sub">Strait of Hormuz as % of global energy trade</div>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div class="chart-wrap" style="height:140px;flex:1"><canvas id="hormuzGlobal"></canvas></div>
+      <table class="pie-data" style="width:110px;flex-shrink:0;margin-top:4px">
+        <tr><td><span class="pie-dot" style="background:#1e3a5f"></span>POL via Hormuz</td><td><strong>20%</strong></td></tr>
+        <tr><td><span class="pie-dot" style="background:#e2e8f0;border:1px solid #cbd5e1"></span>Other global POL</td><td><strong>80%</strong></td></tr>
+        <tr><td><span class="pie-dot" style="background:#f97316"></span>LNG via Hormuz</td><td><strong>20%</strong></td></tr>
+        <tr><td><span class="pie-dot" style="background:#fde8d0;border:1px solid #fed7aa"></span>Other LNG</td><td><strong>80%</strong></td></tr>
+        <tr style="background:#f0fdf4"><td colspan="2" style="font-weight:600;color:#166534;font-size:9px">20 mbd crude through SoH</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">India's Hormuz Import Dependency</div>
+    <div class="card-sub">% of India's total imports transiting Hormuz</div>
+    <div class="chart-wrap" style="height:160px"><canvas id="hormuzIndia"></canvas></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">India's Structural Hormuz Dependency — Commodity Breakdown</div>
+  <table class="htable">
+    <thead><tr><th>Commodity</th><th>India's Volume/Share</th><th>Hormuz Transit</th><th>March 2026 Crisis Impact</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Crude Oil</strong></td><td>~2.5 mbd (46% of total)</td><td><strong style="color:#dc2626">46%</strong> via Hormuz</td><td>Price at $112/bbl; OMC losses ₹26/L on petrol</td></tr>
+      <tr><td><strong>LPG (cooking gas)</strong></td><td>60% of total LPG</td><td><strong style="color:#dc2626">90%</strong> via Hormuz</td><td>₹60/cyl hike; Essential Commodities Act invoked</td></tr>
+      <tr><td><strong>LNG (natural gas)</strong></td><td>40% imported</td><td><strong style="color:#dc2626">55–60%</strong> via Hormuz</td><td>Qatar + UAE = 53% of India's LNG; Ras Laffan shut</td></tr>
+      <tr><td><strong>Refined Products</strong></td><td>10–12% of demand</td><td>Significant via Gulf</td><td>ATF up 60%; naphtha, polyester yarn rise 20–40%</td></tr>
+      <tr><td><strong>Fertiliser (Gulf)</strong></td><td>40% of total</td><td>Critical dependency</td><td>Urea/DAP from Saudi, Qatar, UAE; threatens Rabi crop</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="callout info"><strong>Key fact:</strong> Even a 1% supply drop can lift oil prices by 3–8%. A 20% Hormuz disruption could double prices from $60 to $120/bbl. India — world's 3rd-largest oil consumer with 89% import dependence — is directly at risk.</div>
+
+<div class="page-break"></div>
+
+<!-- S3: CPI LADDER -->
+<div class="sec-head"><div class="sec-num">3</div><div class="sec-title">CPI Inflation Ladder — Every $10/bbl Crude Rise</div><div class="sec-line"></div></div>
+<div class="card">
+  <div class="card-title">CPI Inflation vs Brent Price Scenarios ($70–$160/bbl)</div>
+  <div class="card-sub">CareEdge elasticity: 55–60 bps per $10/bbl · Base CPI Jan 2026 = 2.75% · RBI upper band = 6%</div>
+  <div class="legend">
+    <span><span class="ldot" style="background:#1e6fbf"></span>CPI (crude only)</span>
+    <span><span class="ldot" style="background:#c85a00"></span>CPI + rupee effect</span>
+    <span><span class="ldot" style="background:#dc2626;opacity:0.5"></span>RBI 6% upper band</span>
+  </div>
+  <div class="chart-wrap" style="height:300px"><canvas id="cpiLadder"></canvas></div>
+  <!-- CPI data table below chart -->
+  <table style="margin-top:10px;font-size:10px">
+    <thead><tr><th>Brent ($/bbl)</th><th>CPI Crude Only</th><th>CPI + Rupee Effect</th><th>vs RBI Band</th><th>GDP</th><th>CAD</th></tr></thead>
+    <tbody>
+      <tr><td>$70</td><td>2.92%</td><td>2.94%</td><td style="color:#16a34a">✓ Safe</td><td>6.7%</td><td>-1.0%</td></tr>
+      <tr><td>$80</td><td>3.46%</td><td>3.56%</td><td style="color:#16a34a">✓ Safe</td><td>6.5%</td><td>-1.4%</td></tr>
+      <tr><td>$90</td><td>4.01%</td><td>4.19%</td><td style="color:#16a34a">✓ Safe</td><td>6.3%</td><td>-1.8%</td></tr>
+      <tr><td>$100</td><td>4.56%</td><td>4.82%</td><td style="color:#16a34a">✓ Safe</td><td>6.1%</td><td>-2.2%</td></tr>
+      <tr style="background:#fef3c7"><td><strong>$112 (Today)</strong></td><td><strong>5.12%</strong></td><td><strong>5.46%</strong></td><td style="color:#d97706"><strong>⚠ Watch</strong></td><td><strong>5.9%</strong></td><td><strong>-2.5%</strong></td></tr>
+      <tr><td>$120</td><td>5.67%</td><td>6.09%</td><td style="color:#dc2626">✗ Breached</td><td>5.7%</td><td>-2.8%</td></tr>
+      <tr style="background:#fef2f2"><td>$140</td><td>6.76%</td><td>7.33%</td><td style="color:#dc2626">✗ Severe</td><td>5.1%</td><td>-3.5%</td></tr>
+      <tr style="background:#fef2f2"><td>$160</td><td>7.87%</td><td>8.60%</td><td style="color:#991b1b">✗ Crisis</td><td>4.3%</td><td>-4.9%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- S4: RUPEE -->
+<div class="sec-head"><div class="sec-num">4</div><div class="sec-title">The Rupee Double Whammy</div><div class="sec-line"></div></div>
+<div class="card">
+  <div class="card-title">Extra CPI from Rupee Depreciation (at $112 crude) — Re.1 weakening = +8 bps CPI independently</div>
+  <div class="rupee-grid">
+    <div class="rupee-card"><div class="r-rate">₹86.8 <span style="font-size:9px;color:#64748b">(Jan base)</span></div><div class="r-extra">Extra CPI from rupee: <strong>+0.00%</strong></div><div class="r-extra">Combined CPI: <strong>5.22%</strong></div><div class="r-extra">Rupee cost/bbl: <strong>₹9,722</strong></div><div class="r-bar-wrap"><div class="r-bar" style="background:#3b82f6;width:8%"></div></div></div>
+    <div class="rupee-card"><div class="r-rate">₹90</div><div class="r-extra">Extra CPI from rupee: <strong>+0.29%</strong></div><div class="r-extra">Combined CPI: <strong>5.51%</strong></div><div class="r-extra">Rupee cost/bbl: <strong>₹10,080</strong></div><div class="r-bar-wrap"><div class="r-bar" style="background:#60a5fa;width:22%"></div></div></div>
+    <div class="rupee-card today-r"><div class="r-rate" style="color:#d97706">₹94.7 ← Today</div><div class="r-extra">Extra CPI from rupee: <strong>+0.73%</strong></div><div class="r-extra">Combined CPI: <strong style="color:#d97706">5.96%</strong></div><div class="r-extra">Rupee cost/bbl: <strong>₹10,606</strong></div><div class="r-bar-wrap"><div class="r-bar" style="background:#f59e0b;width:42%"></div></div></div>
+    <div class="rupee-card"><div class="r-rate">₹97</div><div class="r-extra">Extra CPI from rupee: <strong>+0.94%</strong></div><div class="r-extra">Combined CPI: <strong>6.16%</strong> ⚠ RBI breach</div><div class="r-extra">Rupee cost/bbl: <strong>₹10,864</strong></div><div class="r-bar-wrap"><div class="r-bar" style="background:#ef4444;width:52%"></div></div></div>
+    <div class="rupee-card"><div class="r-rate">₹100</div><div class="r-extra">Extra CPI from rupee: <strong>+1.22%</strong></div><div class="r-extra">Combined CPI: <strong>6.44%</strong></div><div class="r-extra">Rupee cost/bbl: <strong>₹11,200</strong></div><div class="r-bar-wrap"><div class="r-bar" style="background:#dc2626;width:65%"></div></div></div>
+    <div class="rupee-card danger-r"><div class="r-rate" style="color:#dc2626">₹110 (Extreme)</div><div class="r-extra">Extra CPI from rupee: <strong>+2.14%</strong></div><div class="r-extra">Combined CPI: <strong style="color:#dc2626">7.37%</strong></div><div class="r-extra">Rupee cost/bbl: <strong>₹12,320</strong></div><div class="r-bar-wrap"><div class="r-bar" style="background:#991b1b;width:100%"></div></div></div>
+  </div>
+</div>
+
+<!-- S5: SCENARIO MATRIX -->
+<div class="sec-head"><div class="sec-num">5</div><div class="sec-title">Complete Scenario Matrix — Brent $70 to $160</div><div class="sec-line"></div></div>
+<div class="card">
+  <div class="card-title">Full Macro Impact Matrix by Crude Price Scenario</div>
+  <div class="card-sub">Sources: Goldman Sachs, MUFG Research, CareEdge, Bank of Baroda · ★ = Current position (Mar 28, 2026)</div>
+  <table>
+    <thead><tr><th>Scenario</th><th>Brent</th><th>CPI</th><th>INR/USD</th><th>GDP</th><th>CAD</th><th>Fiscal</th><th>RBI Stance</th></tr></thead>
+    <tbody>
+      <tr><td>Bear — ceasefire</td><td>$70</td><td>3.04%</td><td>₹88–90</td><td>6.7%</td><td>-1.0%</td><td>4.6%</td><td><span class="badge bg">Rate cut</span></td></tr>
+      <tr><td>Partial relief</td><td>$80</td><td>3.59%</td><td>₹90–91</td><td>6.5%</td><td>-1.4%</td><td>4.8%</td><td><span class="badge bg">Rate cut</span></td></tr>
+      <tr><td>Prolonged tension</td><td>$90</td><td>4.14%</td><td>₹91–93</td><td>6.3%</td><td>-1.8%</td><td>5.0%</td><td><span class="badge bb">Cut on hold</span></td></tr>
+      <tr><td>Sustained closure</td><td>$100</td><td>4.70%</td><td>₹93–95</td><td>6.1%</td><td>-2.2%</td><td>5.2%</td><td><span class="badge bb">Monitoring</span></td></tr>
+      <tr class="today"><td>★ TODAY (Mar 28, 2026)</td><td>$112</td><td>5.43%</td><td>₹94.7</td><td>5.9%</td><td>-2.5%</td><td>5.4%</td><td><span class="badge ba">No cut; watch</span></td></tr>
+      <tr class="danger"><td>Escalation I</td><td>$120</td><td>5.87%</td><td>₹96–98</td><td>5.7%</td><td>-2.8%</td><td>5.7%</td><td><span class="badge br">Hike risk</span></td></tr>
+      <tr class="danger"><td>Escalation II</td><td>$130</td><td>6.42%</td><td>₹98–101</td><td>5.5%</td><td>-3.1%</td><td>6.1%</td><td><span class="badge br">Hike risk</span></td></tr>
+      <tr class="danger"><td>Abqaiq risk</td><td>$140</td><td>6.97%</td><td>₹101–105</td><td>5.1%</td><td>-3.5%</td><td>6.3%</td><td><span class="badge bd">Stagflation</span></td></tr>
+      <tr class="danger"><td>Gulf-wide crisis</td><td>$150</td><td>7.52%</td><td>₹105–110</td><td>4.8%</td><td>-4.0%</td><td>—</td><td><span class="badge bd">Emergency</span></td></tr>
+      <tr class="danger"><td>Extreme scenario</td><td>$160</td><td>8.07%</td><td>₹110+</td><td>4.3%</td><td>-4.9%</td><td>7.2%</td><td><span class="badge bd">Recession risk</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="page-break"></div>
+
+<!-- S6: GDP, CAD, IMPORT, BOP -->
+<div class="sec-head"><div class="sec-num">6</div><div class="sec-title">GDP, CAD &amp; Import Bill Impact</div><div class="sec-line"></div></div>
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">GDP Growth Trajectory (% p.a.)</div>
+    <div class="card-sub">Pre-war 7.0% → Extreme $160 scenario: 4.3%</div>
+    <div class="chart-wrap" style="height:190px"><canvas id="gdpChart"></canvas></div>
+    <table style="margin-top:8px;font-size:9px">
+      <thead><tr><th>Brent</th><th>GDP</th><th>Change vs pre-war</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-war</td><td>7.0%</td><td>—</td></tr>
+        <tr><td>$70</td><td>6.7%</td><td style="color:#16a34a">-0.3 pp</td></tr>
+        <tr><td>$100</td><td>6.1%</td><td style="color:#d97706">-0.9 pp</td></tr>
+        <tr style="background:#fef3c7"><td><strong>$112 (now)</strong></td><td><strong>5.9%</strong></td><td style="color:#dc2626"><strong>-1.1 pp</strong></td></tr>
+        <tr style="background:#fef2f2"><td>$130</td><td>5.5%</td><td style="color:#dc2626">-1.5 pp</td></tr>
+        <tr style="background:#fef2f2"><td>$160</td><td>4.3%</td><td style="color:#991b1b">-2.7 pp</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Current Account Deficit (% of GDP)</div>
+    <div class="card-sub">Pre-war -1.3% → Extreme -4.9% of GDP</div>
+    <div class="chart-wrap" style="height:190px"><canvas id="cadChart"></canvas></div>
+    <table style="margin-top:8px;font-size:9px">
+      <thead><tr><th>Brent</th><th>CAD</th><th>BoP Impact</th></tr></thead>
+      <tbody>
+        <tr><td>Pre-war</td><td>-1.3%</td><td>-$15bn</td></tr>
+        <tr><td>$70</td><td>-1.0%</td><td>-$15bn</td></tr>
+        <tr><td>$100</td><td>-2.2%</td><td>-$85bn</td></tr>
+        <tr style="background:#fef3c7"><td><strong>$112 (now)</strong></td><td><strong>-2.5%</strong></td><td><strong>-$85bn</strong></td></tr>
+        <tr style="background:#fef2f2"><td>$130</td><td>-3.1%</td><td>-$145bn</td></tr>
+        <tr style="background:#fef2f2"><td>$160</td><td>-4.9%</td><td>-$190bn+</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Additional Annual Import Bill vs Jan 2026 Baseline ($67/bbl) — USD Billions</div>
+  <div class="card-sub">Cumulative extra cost India pays each year at each crude price level (colour = severity)</div>
+  <div class="chart-wrap" style="height:210px"><canvas id="importChart"></canvas></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+    <span style="font-size:10px;background:#dbeafe;color:#1e40af;padding:3px 8px;border-radius:4px">$70: +$42bn</span>
+    <span style="font-size:10px;background:#dbeafe;color:#1e40af;padding:3px 8px;border-radius:4px">$80: +$182bn</span>
+    <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:4px">$90: +$322bn</span>
+    <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:4px">$100: +$462bn</span>
+    <span style="font-size:10px;background:#ffedd5;color:#c2410c;padding:3px 8px;border-radius:4px">$110: +$602bn</span>
+    <span style="font-size:10px;background:#ffedd5;color:#c2410c;padding:3px 8px;border-radius:4px">$120: +$742bn</span>
+    <span style="font-size:10px;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px">$140: +$1,022bn</span>
+    <span style="font-size:10px;background:#fecaca;color:#7f1d1d;padding:3px 8px;border-radius:4px">$160: +$1,302bn</span>
+  </div>
+</div>
+
+<!-- S7: SECTOR BARS -->
+<div class="sec-head"><div class="sec-num">7</div><div class="sec-title">Sector-wise Impact Ranking at $130 Brent</div><div class="sec-line"></div></div>
+<div class="card">
+  <div class="card-title">Cost Increase vs Jan 2026 Base — 15 Sectors Ranked</div>
+  <div class="card-sub">Red = critically impacted · Amber = moderate stress · Green = beneficiary · Values shown on bars</div>
+  <div class="sector-row"><span class="s-name">OMCs (HPCL/BPCL/IOC)</span><div class="s-bar-wrap"><div class="s-bar" style="width:100%;background:#dc2626"><span class="s-bar-label">Rs.18–22/L loss</span></div></div><span class="s-val red">Rank #1 — Critical</span></div>
+  <div class="sector-row"><span class="s-name">Aviation (IndiGo/Air India)</span><div class="s-bar-wrap"><div class="s-bar" style="width:93%;background:#dc2626"><span class="s-bar-label">ATF +93%</span></div></div><span class="s-val red">Rank #2 — Critical</span></div>
+  <div class="sector-row"><span class="s-name">Chemicals/Petrochem</span><div class="s-bar-wrap"><div class="s-bar" style="width:75%;background:#ef4444"><span class="s-bar-label">Naphtha +55%</span></div></div><span class="s-val red">Rank #3 — Severe</span></div>
+  <div class="sector-row"><span class="s-name">Road Logistics/Trucking</span><div class="s-bar-wrap"><div class="s-bar" style="width:70%;background:#f97316"><span class="s-bar-label">Freight +52%</span></div></div><span class="s-val amber">Rank #4 — Severe</span></div>
+  <div class="sector-row"><span class="s-name">Paints (Asian/Berger)</span><div class="s-bar-wrap"><div class="s-bar" style="width:52%;background:#f97316"><span class="s-bar-label">Input +35%</span></div></div><span class="s-val amber">Rank #5 — Severe</span></div>
+  <div class="sector-row"><span class="s-name">Tyres (MRF/Apollo/CEAT)</span><div class="s-bar-wrap"><div class="s-bar" style="width:65%;background:#f59e0b"><span class="s-bar-label">Syn rubber +48%</span></div></div><span class="s-val amber">Rank #6 — Moderate</span></div>
+  <div class="sector-row"><span class="s-name">Fertilisers (GNFC/Chambal)</span><div class="s-bar-wrap"><div class="s-bar" style="width:55%;background:#f59e0b"><span class="s-bar-label">Urea cost +38%</span></div></div><span class="s-val amber">Rank #7 — Moderate</span></div>
+  <div class="sector-row"><span class="s-name">Cement (UltraTech/ACC)</span><div class="s-bar-wrap"><div class="s-bar" style="width:44%;background:#fbbf24"><span class="s-bar-label">Energy +31%</span></div></div><span class="s-val amber">Rank #8 — Moderate</span></div>
+  <div class="sector-row"><span class="s-name">FMCG (HUL/ITC/Dabur)</span><div class="s-bar-wrap"><div class="s-bar" style="width:38%;background:#fbbf24"><span class="s-bar-label">Pkg+freight +25%</span></div></div><span class="s-val amber">Rank #9 — Negative</span></div>
+  <div class="sector-row"><span class="s-name">Textiles (Vardhman/Raymond)</span><div class="s-bar-wrap"><div class="s-bar" style="width:28%;background:#94a3b8"><span class="s-bar-label">Yarn+dyes +28%</span></div></div><span class="s-val">Rank #10 — Stress</span></div>
+  <div class="sector-row"><span class="s-name">Steel & Metals (Tata/JSW)</span><div class="s-bar-wrap"><div class="s-bar" style="width:25%;background:#94a3b8"><span class="s-bar-label">Energy+log +17%</span></div></div><span class="s-val">Rank #11 — Mild</span></div>
+  <div class="sector-row"><span class="s-name">Automobiles ICE (Maruti/Tata)</span><div class="s-bar-wrap"><div class="s-bar" style="width:13%;background:#cbd5e1"><span class="s-bar-label">Input +13%</span></div></div><span class="s-val">Rank #12 — Demand risk</span></div>
+  <div class="sector-row"><span class="s-name">IT/Pharma (TCS/Infosys/Sun)</span><div class="s-bar-wrap"><div class="s-bar" style="width:50%;background:#22c55e"><span class="s-bar-label">+15% INR revenue</span></div></div><span class="s-val green">BENEFICIARY ✓</span></div>
+  <div class="sector-row" style="border:none"><span class="s-name">Upstream E&P (ONGC/Oil India)</span><div class="s-bar-wrap"><div class="s-bar" style="width:65%;background:#16a34a"><span class="s-bar-label">+$63/bbl realisation</span></div></div><span class="s-val green">BENEFICIARY ✓</span></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- S8: SECTOR DETAIL TABLE -->
+<div class="sec-head"><div class="sec-num">8</div><div class="sec-title">Sector Detail: Impact at $100, $130 &amp; $160 Brent</div><div class="sec-line"></div></div>
+<div class="card">
+  <table>
+    <thead><tr><th>Sector / Key Companies</th><th>At $100/bbl</th><th>At $130/bbl</th><th>At $160/bbl</th><th>Rating</th></tr></thead>
+    <tbody>
+      <tr><td><strong>OMCs</strong> (HPCL, BPCL, IOC)</td><td>Rs.10–14/L loss</td><td>Rs.18–22/L loss</td><td>Rs.28+/L loss</td><td><span class="badge br">Critical</span></td></tr>
+      <tr><td><strong>Aviation</strong> (IndiGo, Air India)</td><td>ATF +49%; fares +15–20%</td><td>ATF +93%; fares +30%</td><td>ATF +139%; industry losses</td><td><span class="badge br">Critical</span></td></tr>
+      <tr><td><strong>Paints</strong> (Asian, Berger, Kansai)</td><td>Input cost +18%</td><td>Input cost +35%</td><td>Input cost +55%</td><td><span class="badge br">Severe</span></td></tr>
+      <tr><td><strong>Chemicals/Petrochem</strong></td><td>Naphtha +30%</td><td>Naphtha +55%</td><td>Naphtha +82%</td><td><span class="badge br">Severe</span></td></tr>
+      <tr><td><strong>Fertilisers</strong> (GNFC, Chambal)</td><td>Urea +21%</td><td>Urea +38%</td><td>Urea +57%</td><td><span class="badge ba">Moderate–Severe</span></td></tr>
+      <tr><td><strong>Road Logistics</strong></td><td>Freight +28%</td><td>Freight +52%</td><td>Freight +76%</td><td><span class="badge br">Severe</span></td></tr>
+      <tr><td><strong>Tyres</strong> (MRF, Apollo, CEAT)</td><td>Syn rubber +26%</td><td>Syn rubber +48%</td><td>Syn rubber +72%</td><td><span class="badge ba">Moderate</span></td></tr>
+      <tr><td><strong>Cement</strong> (UltraTech, ACC)</td><td>Energy+freight +16%</td><td>Energy+freight +31%</td><td>Energy+freight +46%</td><td><span class="badge ba">Moderate</span></td></tr>
+      <tr><td><strong>FMCG</strong> (HUL, ITC, Dabur)</td><td>Pkg+freight +13%</td><td>Pkg+freight +25%</td><td>Pkg+freight +38%</td><td><span class="badge ba">Negative</span></td></tr>
+      <tr><td><strong>Automobiles</strong> (Maruti, Tata, M&amp;M)</td><td>Input +7%; demand dip</td><td>Input +13%; demand risk</td><td>Input +19%; recession risk</td><td><span class="badge ba">Demand risk</span></td></tr>
+      <tr><td><strong>IT/Pharma</strong> (TCS, Infosys, Sun)</td><td>+9% INR revenue</td><td>+15% INR revenue</td><td>+26% INR revenue</td><td><span class="badge bg">Beneficiary ✓</span></td></tr>
+      <tr><td><strong>E&amp;P Upstream</strong> (ONGC, Oil India)</td><td>+$33/bbl realisation</td><td>+$63/bbl realisation</td><td>+$93/bbl realisation</td><td><span class="badge bg">Beneficiary ✓</span></td></tr>
+      <tr><td><strong>EV/Solar/Green H₂</strong> (Waaree, JSW)</td><td>ROI improves</td><td>ROI compelling</td><td>Transition accelerates</td><td><span class="badge bg">Beneficiary ✓</span></td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="callout"><strong>Aviation focus:</strong> IndiGo's additional annual fuel bill = Rs.300 cr per $1/bbl rise. With crude up ~$45 from Jan base, IndiGo faces Rs.13,500 cr in additional annual fuel costs — erasing ~3 years of pre-crisis profits in a single year.</div>
+
+<!-- S9: RUSSIA vs ISRAEL-IRAN -->
+<div class="sec-head"><div class="sec-num">9</div><div class="sec-title">Comparative Shock: Russia–Ukraine (2022) vs Israel–Iran (2026)</div><div class="sec-line"></div></div>
+<div class="card">
+  <table class="comp-table">
+    <thead><tr><th>Factor</th><th>Russia–Ukraine (2022)</th><th>Israel–Iran Current</th><th>Israel–Iran ≥$125 Scenario</th></tr></thead>
+    <tbody>
+      <tr><td>Brent crude</td><td>>$100 for ~100 days</td><td>~$90–$120 spike</td><td>$120–$160</td></tr>
+      <tr><td>Oil price momentum</td><td>Gradual rise</td><td>Very sharp (+60%)</td><td>Violent spike + shortages</td></tr>
+      <tr><td>Retail fuel prices</td><td>↑ ~Rs.10/litre</td><td>No increase (frozen)</td><td>Partial pass-through</td></tr>
+      <tr><td>OMC losses</td><td>~Rs.20,000 cr (9 mths)</td><td>~Rs.2,400 cr/day</td><td>~Rs.5 lakh cr annually</td></tr>
+      <tr><td>Inflation (CPI)</td><td>7–8%</td><td>~5% (muted so far)</td><td>Sharp rise to 7%+</td></tr>
+      <tr><td>GDP impact</td><td>~0.5–0.7% drag</td><td>~1.1% drag</td><td>~2.7% drag (7%→4.3%)</td></tr>
+      <tr><td>Excise duty cut</td><td>Rs.8 petrol / Rs.6 diesel</td><td>Rs.10/litre cut</td><td>Further cuts possible</td></tr>
+      <tr><td>Govt stance</td><td>Pass-through + relief</td><td>No pass-through</td><td>Burden sharing</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- S10: PIE CHARTS -->
+<div class="sec-head"><div class="sec-num">10</div><div class="sec-title">India's Oil &amp; Gas Consumption Structure</div><div class="sec-line"></div></div>
+<div class="three-col">
+  <div class="card" style="margin:0">
+    <div class="card-title">Oil by sector</div>
+    <div class="chart-wrap" style="height:140px"><canvas id="oilSector"></canvas></div>
+    <table class="pie-data">
+      <tr><td><span class="pie-dot" style="background:#1e3a5f"></span>Transport (Road)</td><td><strong>41%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#3b82f6"></span>Personal Mobility</td><td><strong>17%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#f97316"></span>Domestic LPG</td><td><strong>16%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#16a34a"></span>Industry & Mfg</td><td><strong>12%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#ef4444"></span>Aviation</td><td><strong>4%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#8b5cf6"></span>Petrochemicals</td><td><strong>4%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#94a3b8"></span>Others</td><td><strong>6%</strong></td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin:0">
+    <div class="card-title">Gas by sector</div>
+    <div class="chart-wrap" style="height:140px"><canvas id="gasSector"></canvas></div>
+    <table class="pie-data">
+      <tr><td><span class="pie-dot" style="background:#f59e0b"></span>Fertiliser (30%)</td><td><strong>29%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#3b82f6"></span>City Gas Dist (7%)</td><td><strong>23%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#94a3b8"></span>Others (20%)</td><td><strong>19%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#ef4444"></span>Power (100%)</td><td><strong>12%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#16a34a"></span>Refineries (35%)</td><td><strong>8%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#8b5cf6"></span>Petrochemicals</td><td><strong>6%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#0ea5e9"></span>Domestic</td><td><strong>3%</strong></td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin:0">
+    <div class="card-title">Diesel by sector</div>
+    <div class="chart-wrap" style="height:140px"><canvas id="dieselSector"></canvas></div>
+    <table class="pie-data">
+      <tr><td><span class="pie-dot" style="background:#94a3b8"></span>Others</td><td><strong>35%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#1e3a5f"></span>Road Transport</td><td><strong>19%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#dc2626"></span>Mining</td><td><strong>13%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#f97316"></span>Manufacturing</td><td><strong>12%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#3b82f6"></span>Railways</td><td><strong>8%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#16a34a"></span>Shipping</td><td><strong>7%</strong></td></tr>
+      <tr><td><span class="pie-dot" style="background:#f59e0b"></span>Power</td><td><strong>2%</strong></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- S11: BURDEN SHARING -->
+<div class="sec-head"><div class="sec-num">11</div><div class="sec-title">Energy Price Burden Sharing — Transmission Mechanism</div><div class="sec-line"></div></div>
+<div class="card">
+  <div class="card-title">How high energy prices flow through India's economy</div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0">
+    <div style="background:#dc2626;color:#fff;padding:8px 32px;border-radius:6px;font-size:12px;font-weight:700">High Energy Prices — Brent $112–$160/bbl</div>
+    <div style="font-size:18px;color:#94a3b8">↓</div>
+    <div style="background:#1e3a5f;color:#fff;padding:8px 32px;border-radius:6px;font-size:11px;font-weight:700;text-align:center">Distributional Burden Sharing across Govt, OMCs &amp; Households</div>
+    <div style="font-size:18px;color:#94a3b8">↓</div>
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="background:#f97316;color:#fff;padding:6px 12px;border-radius:6px;font-size:10px;font-weight:600;text-align:center;width:130px">Households<br><span style="font-weight:400;font-size:9px">Eroded real incomes<br>Declining consumption</span></div>
+        <div style="font-size:12px;color:#94a3b8">↓</div>
+        <div style="background:#bfdbfe;color:#1e3a5f;padding:5px 10px;border-radius:6px;font-size:9px;font-weight:600;text-align:center;width:130px">Subsidy cushioning<br>limits demand shock</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="background:#16a34a;color:#fff;padding:6px 12px;border-radius:6px;font-size:10px;font-weight:600;text-align:center;width:130px">Government<br><span style="font-weight:400;font-size:9px">Constrained spending<br>Higher subsidy costs</span></div>
+        <div style="font-size:12px;color:#94a3b8">↓</div>
+        <div style="background:#dcfce7;color:#166534;padding:5px 10px;border-radius:6px;font-size:9px;font-weight:600;text-align:center;width:130px">Rs.10/L excise cut<br>OMC support</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="background:#f59e0b;color:#fff;padding:6px 12px;border-radius:6px;font-size:10px;font-weight:600;text-align:center;width:130px">Corporates / OMCs<br><span style="font-weight:400;font-size:9px">Rs.2,400 cr/day loss<br>Rising input costs</span></div>
+        <div style="font-size:12px;color:#94a3b8">↓</div>
+        <div style="background:#fef3c7;color:#92400e;padding:5px 10px;border-radius:6px;font-size:9px;font-weight:600;text-align:center;width:130px">Supply chain disruptions<br>&amp; reduced output</div>
+      </div>
+    </div>
+    <div style="font-size:18px;color:#94a3b8">↓</div>
+    <div style="display:flex;gap:14px">
+      <div style="background:#fef3c7;border:1px solid #f59e0b;padding:6px 14px;border-radius:6px;font-size:10px;font-weight:600;color:#78350f;text-align:center">Fiscal trade-offs<br><span style="font-weight:400;font-size:9px">Subsidies crowd out capex &amp; social spending</span></div>
+      <div style="background:#fee2e2;border:1px solid #dc2626;padding:6px 14px;border-radius:6px;font-size:10px;font-weight:600;color:#7f1d1d;text-align:center">Weaker growth &amp; investment<br><span style="font-weight:400;font-size:9px">Lower profits, confidence &amp; FPI flows</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S12: RADAR -->
+<div class="sec-head"><div class="sec-num">12</div><div class="sec-title">Five Simultaneous Pressure Points — Macro Stress Radar</div><div class="sec-line"></div></div>
+<div class="card">
+  <div class="card-title">Stress index: pre-war baseline vs today ($112) vs extreme ($160)</div>
+  <div style="display:flex;gap:10px;align-items:flex-start">
+    <div class="chart-wrap" style="height:220px;flex:1.2"><canvas id="radarChart"></canvas></div>
+    <table style="font-size:10px;flex:1;margin-top:10px">
+      <thead><tr><th>Pressure Point</th><th>Pre-war</th><th>Today $112</th><th>Extreme $160</th></tr></thead>
+      <tbody>
+        <tr><td>Import Bill</td><td style="color:#16a34a">Low</td><td style="color:#d97706">+$85bn extra</td><td style="color:#dc2626">+$1,302bn</td></tr>
+        <tr><td>CAD Stress</td><td style="color:#16a34a">-1.3% GDP</td><td style="color:#d97706">-2.5% GDP</td><td style="color:#dc2626">-4.9% GDP</td></tr>
+        <tr><td>Rupee Pressure</td><td style="color:#16a34a">₹86.8</td><td style="color:#d97706">₹94.7</td><td style="color:#dc2626">₹110+</td></tr>
+        <tr><td>CPI Inflation</td><td style="color:#16a34a">2.75%</td><td style="color:#d97706">5.43%</td><td style="color:#dc2626">8.07%</td></tr>
+        <tr><td>GDP Drag</td><td style="color:#16a34a">7.0%</td><td style="color:#d97706">5.9%</td><td style="color:#dc2626">4.3%</td></tr>
+        <tr><td>Fiscal Stress</td><td style="color:#16a34a">4.5%</td><td style="color:#d97706">5.4%</td><td style="color:#dc2626">7.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- S13: PORTFOLIO -->
+<div class="sec-head"><div class="sec-num">13</div><div class="sec-title">Portfolio Strategy Implications</div><div class="sec-line"></div></div>
+<div class="two-col">
+  <div class="card" style="margin:0;border-left:3px solid #dc2626">
+    <div class="card-title" style="color:#dc2626">Rotate OUT at $112–$160 Brent</div>
+    <div style="margin-top:8px;font-size:10px">
+      <div style="margin:5px 0;padding:4px 8px;background:#fef2f2;border-radius:4px"><span class="tag r">Critical</span><strong>OMCs</strong> (HPCL, BPCL, IOC) — Rs.2,400 cr/day loss; zero exposure until hike formula announced</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#fef2f2;border-radius:4px"><span class="tag r">Critical</span><strong>Airlines</strong> (IndiGo, Air India) — ATF up 93% at $130; Rs.13,500 cr extra cost for IndiGo</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#fff7ed;border-radius:4px"><span class="tag r">Severe</span><strong>Paints</strong> (Asian Paints, Berger) — input costs up 35–55%</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#fff7ed;border-radius:4px"><span class="tag r">Severe</span><strong>Chemicals &amp; Petrochem</strong> — naphtha up 55–82%</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#fefce8;border-radius:4px"><span class="tag a">Moderate</span><strong>FMCG</strong> (HUL, ITC) — volume growth stalls; shrinkflation likely</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#fefce8;border-radius:4px"><span class="tag a">Moderate</span><strong>Auto ICE</strong> (Maruti, Tata) — demand destruction risk</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;border-left:3px solid #16a34a">
+    <div class="card-title" style="color:#16a34a">Rotate INTO at $112–$160 Brent</div>
+    <div style="margin-top:8px;font-size:10px">
+      <div style="margin:5px 0;padding:4px 8px;background:#f0fdf4;border-radius:4px"><span class="tag g">Strong Buy</span><strong>IT exporters</strong> (TCS, Infosys, HCL) — every Re.1 fall adds Rs.500 cr to sector earnings</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#f0fdf4;border-radius:4px"><span class="tag g">Strong Buy</span><strong>Pharma</strong> (Sun, Cipla, Dr Reddy) — defensive + USD earner; natural hedge</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#f0fdf4;border-radius:4px"><span class="tag g">Buy</span><strong>ONGC, Oil India</strong> — direct beneficiaries: +$63/bbl realisation at $130</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#f0fdf4;border-radius:4px"><span class="tag g">Buy</span><strong>EV/Solar/Green H₂</strong> (Waaree, JSW, Tata Power) — ROI undeniable at $150+</div>
+      <div style="margin:5px 0;padding:4px 8px;background:#fefce8;border-radius:4px"><span class="tag a">Hedge</span><strong>Gold + sovereign bonds</strong> — stagflation hedge at $130+</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="footer-bar">
+  <strong>Sources:</strong> CareEdge Global India Macro Update (Mar 30, 2026) · Goldman Sachs 'India Under Pressure' (Mar 26, 2026) · MUFG Research India (Mar 12, 2026) · Bernstein India Energy Note (Mar 2026) · Bank of Baroda India Macro (Mar 2026) · RBI Monetary Policy Report (Oct 2025) · ICICI Bank Research (Mar 2026) · HDFC Securities Sector Reports (Mar 2026) · Esprit Growth Partners Analysis (Mar 2026)<br>
+  <strong style="color:rgba(255,255,255,0.8)">Disclaimer:</strong> For informational and research purposes only. Not financial, investment, or trading advice. All figures are modelled estimates. Consult a SEBI-registered advisor before making investment decisions.
+</div>
+
+</div><!-- end page -->
+
+<script>
+const tc='#475569', gc='rgba(0,0,0,0.06)';
+
+// -- Hormuz Global doughnut
+new Chart(document.getElementById('hormuzGlobal'),{
+  type:'doughnut',
+  data:{labels:['POL via Hormuz (20%)','Other global POL (80%)','LNG via Hormuz (20%)','Other LNG (80%)'],datasets:[{data:[20,80,20,80],backgroundColor:['#1e3a5f','#e2e8f0','#f97316','#fde8d0'],borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.label}}}}
+});
+
+// -- Hormuz India horizontal bar with datalabels
+new Chart(document.getElementById('hormuzIndia'),{
+  type:'bar',
+  data:{
+    labels:['Crude Oil','LPG (cooking gas)','LNG (natural gas)','Fertiliser (Gulf)'],
+    datasets:[{
+      label:'% via Hormuz',
+      data:[46,90,55,40],
+      backgroundColor:['#1e3a5f','#dc2626','#f97316','#f59e0b'],
+      borderRadius:4
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,indexAxis:'y',
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+'% transits Hormuz'}}
+    },
+    scales:{
+      x:{min:0,max:100,ticks:{color:tc,callback:v=>v+'%',font:{size:9}},grid:{color:gc}},
+      y:{ticks:{color:tc,font:{size:9,weight:'500'}},grid:{display:false}}
+    }
+  },
+  plugins:[{
+    id:'barLabels',
+    afterDatasetsDraw(chart){
+      const{ctx,data,scales:{x,y}}=chart;
+      ctx.save();
+      chart.getDatasetMeta(0).data.forEach((bar,i)=>{
+        const val=data.datasets[0].data[i];
+        ctx.fillStyle='#fff';
+        ctx.font='bold 11px Inter,sans-serif';
+        ctx.textAlign='left';
+        ctx.textBaseline='middle';
+        const xPos=x.getPixelForValue(val);
+        ctx.fillText(val+'%', xPos-28, bar.y);
+      });
+      ctx.restore();
+    }
+  }]
+});
+
+// -- CPI Ladder bar chart with value labels on top
+new Chart(document.getElementById('cpiLadder'),{
+  type:'bar',
+  data:{
+    labels:['$70','$80','$90','$100','$110','$120','$140','$160'],
+    datasets:[
+      {label:'CPI crude only',data:[2.92,3.46,4.01,4.56,5.12,5.67,6.76,7.87],backgroundColor:'#1e6fbf',borderRadius:3},
+      {label:'CPI + rupee',data:[2.94,3.56,4.19,4.82,5.46,6.09,7.33,8.60],backgroundColor:'#c85a00',borderRadius:3}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y.toFixed(2)+'%'}}
+    },
+    scales:{
+      x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},
+      y:{min:0,max:10,ticks:{color:tc,callback:v=>v+'%',font:{size:9}},grid:{color:gc}}
+    }
+  },
+  plugins:[
+    {
+      id:'rbiLine',
+      afterDraw(chart){
+        const{ctx,chartArea:{left,right},scales:{y}}=chart;
+        const yp=y.getPixelForValue(6);
+        ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle='#dc2626';ctx.lineWidth=1.5;ctx.globalAlpha=0.8;
+        ctx.beginPath();ctx.moveTo(left,yp);ctx.lineTo(right,yp);ctx.stroke();
+        ctx.setLineDash([]);ctx.globalAlpha=1;ctx.fillStyle='#991b1b';
+        ctx.font='bold 9px Inter,sans-serif';ctx.fillText('RBI 6% ceiling',right-70,yp-4);
+        ctx.restore();
+      }
+    },
+    {
+      id:'topLabels',
+      afterDatasetsDraw(chart){
+        const{ctx,data,scales:{x,y}}=chart;
+        ctx.save();
+        // label only the "CPI + rupee" dataset (index 1)
+        chart.getDatasetMeta(1).data.forEach((bar,i)=>{
+          const val=data.datasets[1].data[i];
+          ctx.fillStyle='#7c2d12';
+          ctx.font='bold 8px Inter,sans-serif';
+          ctx.textAlign='center';
+          ctx.textBaseline='bottom';
+          ctx.fillText(val.toFixed(2)+'%', bar.x, bar.y-2);
+        });
+        ctx.restore();
+      }
+    }
+  ]
+});
+
+// -- GDP line chart with point labels
+const gdpLabels=['Pre-war','$70','$80','$90','$100','$112','$120','$130','$140','$150','$160'];
+const gdpData=[7.0,6.7,6.5,6.3,6.1,5.9,5.7,5.5,5.1,4.8,4.3];
+new Chart(document.getElementById('gdpChart'),{
+  type:'line',
+  data:{labels:gdpLabels,datasets:[{data:gdpData,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.08)',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:'#16a34a',borderWidth:2}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc,font:{size:8}},grid:{color:gc}},y:{min:3.5,max:7.5,ticks:{color:tc,callback:v=>v+'%',font:{size:9}},grid:{color:gc}}}},
+  plugins:[{id:'gdpLabels',afterDatasetsDraw(chart){
+    const{ctx,data,scales:{x,y}}=chart;ctx.save();
+    chart.getDatasetMeta(0).data.forEach((pt,i)=>{
+      const v=data.datasets[0].data[i];
+      ctx.fillStyle='#166534';ctx.font='bold 8px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+      ctx.fillText(v.toFixed(1)+'%',pt.x,pt.y-4);
+    });ctx.restore();
+  }}]
+});
+
+// -- CAD line chart
+const cadData=[-1.3,-1.0,-1.4,-1.8,-2.2,-2.5,-2.8,-3.1,-3.5,-4.0,-4.9];
+new Chart(document.getElementById('cadChart'),{
+  type:'line',
+  data:{labels:gdpLabels,datasets:[{data:cadData,borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.08)',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:'#dc2626',borderWidth:2}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc,font:{size:8}},grid:{color:gc}},y:{ticks:{color:tc,callback:v=>v+'%',font:{size:9}},grid:{color:gc}}}},
+  plugins:[{id:'cadLabels',afterDatasetsDraw(chart){
+    const{ctx,data,scales:{x,y}}=chart;ctx.save();
+    chart.getDatasetMeta(0).data.forEach((pt,i)=>{
+      const v=data.datasets[0].data[i];
+      ctx.fillStyle='#991b1b';ctx.font='bold 8px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+      ctx.fillText(v.toFixed(1)+'%',pt.x,pt.y-4);
+    });ctx.restore();
+  }}]
+});
+
+// -- Import bill bar
+const importVals=[42,182,322,462,602,742,1022,1302];
+new Chart(document.getElementById('importChart'),{
+  type:'bar',
+  data:{
+    labels:['$70','$80','$90','$100','$110','$120','$140','$160'],
+    datasets:[{data:importVals,backgroundColor:importVals.map(v=>v<200?'#3b82f6':v<600?'#f59e0b':v<1000?'#f97316':'#dc2626'),borderRadius:4}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc,font:{size:9}},grid:{color:gc}},y:{ticks:{color:tc,callback:v=>'$'+v+'bn',font:{size:9}},grid:{color:gc}}}},
+  plugins:[{id:'impLabels',afterDatasetsDraw(chart){
+    const{ctx,data,scales:{x,y}}=chart;ctx.save();
+    chart.getDatasetMeta(0).data.forEach((bar,i)=>{
+      const v=data.datasets[0].data[i];
+      ctx.fillStyle='#1e293b';ctx.font='bold 9px Inter,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+      ctx.fillText('$'+v.toLocaleString()+'bn',bar.x,bar.y-3);
+    });ctx.restore();
+  }}]
+});
+
+// -- Oil sector pie
+new Chart(document.getElementById('oilSector'),{
+  type:'doughnut',
+  data:{labels:['Transport 41%','Personal 17%','LPG 16%','Industry 12%','Aviation 4%','Petrochem 4%','Others 6%'],datasets:[{data:[41,17,16,12,4,4,6],backgroundColor:['#1e3a5f','#3b82f6','#f97316','#16a34a','#ef4444','#8b5cf6','#94a3b8'],borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.label}}}}
+});
+
+// -- Gas sector pie
+new Chart(document.getElementById('gasSector'),{
+  type:'doughnut',
+  data:{labels:['Fertiliser 29%','City Gas 23%','Others 19%','Power 12%','Refineries 8%','Petrochem 6%','Domestic 3%'],datasets:[{data:[29,23,19,12,8,6,3],backgroundColor:['#f59e0b','#3b82f6','#94a3b8','#ef4444','#16a34a','#8b5cf6','#0ea5e9'],borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.label}}}}
+});
+
+// -- Diesel sector pie
+new Chart(document.getElementById('dieselSector'),{
+  type:'doughnut',
+  data:{labels:['Others 35%','Road 19%','Mining 13%','Mfg 12%','Railways 8%','Shipping 7%','Power 2%'],datasets:[{data:[35,19,13,12,8,7,2],backgroundColor:['#94a3b8','#1e3a5f','#dc2626','#f97316','#3b82f6','#16a34a','#f59e0b'],borderWidth:1}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.label}}}}
+});
+
+// -- Radar chart
+new Chart(document.getElementById('radarChart'),{
+  type:'radar',
+  data:{
+    labels:['Import Bill','CAD Stress','Rupee Pressure','CPI Inflation','GDP Drag','Fiscal Stress'],
+    datasets:[
+      {label:'Pre-war baseline',data:[1,1,1,2,0,1],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.1)',pointBackgroundColor:'#16a34a',borderWidth:2,pointRadius:3},
+      {label:'Today ($112/bbl)',data:[6,5,6,7,4,5],borderColor:'#f97316',backgroundColor:'rgba(249,115,22,0.1)',pointBackgroundColor:'#f97316',borderWidth:2,pointRadius:3},
+      {label:'Extreme ($160/bbl)',data:[10,9,9,9,8,9],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.1)',pointBackgroundColor:'#dc2626',borderWidth:2,pointRadius:3}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    scales:{r:{min:0,max:10,ticks:{display:false,stepSize:2},grid:{color:'rgba(0,0,0,0.08)'},pointLabels:{font:{size:10},color:'#1e293b'}}},
+    plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:10,padding:8}}}
+  }
+});
+</script>
+</body>
+</html>
